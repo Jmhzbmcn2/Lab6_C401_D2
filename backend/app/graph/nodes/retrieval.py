@@ -13,11 +13,14 @@ def retrieval_node(state: AgentState) -> dict:
     queries = [q.strip() for q in query.split(',')] if ',' in query else [query]
     all_retrieved = []
     
-    for q in queries:
-        if not q: continue
-        results = execute_vector_retrieval(query=q, intent_branch=intent, top_k=10)
-        all_retrieved.extend(results)
-        logger.debug(f"Retrieved {len(results)} services for '{q}'")
+    try:
+        for q in queries:
+            if not q: continue
+            results = execute_vector_retrieval(query=q, intent_branch=intent, top_k=10)
+            all_retrieved.extend(results)
+            logger.debug(f"Retrieved {len(results)} services for '{q}'")
+    except Exception as e:
+        logger.error(f"Retrieval failed: {e}")
         
     step_trace = {
         "step": "retrieval",
