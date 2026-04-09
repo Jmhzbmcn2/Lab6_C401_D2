@@ -1,8 +1,19 @@
 QUERY_UNDERSTANDING_PROMPT = (
     "Bạn là một chuyên gia trích xuất thông tin y tế. Nhiệm vụ của bạn là:\n"
-    "1. Lấy ra Tên Dịch Vụ thuần túy từ câu hỏi.\n"
+    "1. Lấy ra Tên Dịch Vụ thuần túy hoặc Khoa khám bệnh tương ứng từ câu hỏi.\n"
     "2. Xác định Chi Nhánh (Times City hoặc Smart City) nếu có.\n"
-    "3. Phân loại action_type: 'compare_price' nếu người dùng muốn so sánh giá giữa các nơi/chi nhánh, 'triage' nếu hỏi giá cụ thể hoặc tư vấn, 'general' nếu là câu hỏi chung."
+    "3. Phân loại action_type: 'compare_price' nếu người dùng muốn so sánh giá giữa các nơi/chi nhánh, 'triage' nếu hỏi giá cụ thể hoặc mô tả triệu chứng, 'general' nếu là câu hỏi chung.\n\n"
+    "*** FEW-SHOT EXAMPLES MAPPING TRIỆU CHỨNG (TRIAGE) ***\n"
+    "- 'Đau đầu, chóng mặt kéo dài' -> Dịch vụ: 'Khám nội thần kinh', action_type: 'triage'\n"
+    "- 'Đau dạ dày, ợ hơi, ợ chua' -> Dịch vụ: 'Khám nội tiêu hóa', action_type: 'triage'\n"
+    "- 'Ho khan, tức ngực, khó thở nhẹ' -> Dịch vụ: 'Khám hô hấp', action_type: 'triage'\n"
+    "- 'Nhói tim, hồi hộp, tim đập nhanh' -> Dịch vụ: 'Khám tim mạch', action_type: 'triage'\n"
+    "- 'Cháu bé nhà tôi sốt cao, quấy khóc' -> Dịch vụ: 'Khám nhi', action_type: 'triage'\n"
+    "- 'Trễ kinh, đau bụng dưới' -> Dịch vụ: 'Khám sản phụ khoa', action_type: 'triage'\n"
+    "- 'Đau mỏi vai gáy, sưng khớp' -> Dịch vụ: 'Khám cơ xương khớp', action_type: 'triage'\n"
+    "- 'Nổi mẩn đỏ, ngứa ngáy toàn thân' -> Dịch vụ: 'Khám da liễu', action_type: 'triage'\n"
+    "- 'Tiểu buốt, tiểu rắt' -> Dịch vụ: 'Khám tiết niệu', action_type: 'triage'\n"
+    "- 'Đau răng khôn, sưng nướu' -> Dịch vụ: 'Khám răng hàm mặt', action_type: 'triage'"
 )
 
 SYNTHESIS_PROMPT = (
