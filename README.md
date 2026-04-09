@@ -52,4 +52,4 @@ cd frontend
 npm install
 npm run dev
 ```
-Trình duyệt sẽ hiển thị ở `http://localhost:5173`. Bạn có thể tương tác, xem lịch sử và dễ dàng mở "Debug Trace Tracker" dành cho Dev ở mỗi câu trả lời của Trợ lý.
+Trình duyệt sẽ hiển thị ở `http://localhost:3000`. Bạn có thể tương tác, xem lịch sử và dễ dàng mở "Debug Trace Tracker" dành cho Dev ở mỗi câu trả lời của Trợ lý.
