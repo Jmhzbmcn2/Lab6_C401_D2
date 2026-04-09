@@ -1,29 +1,14 @@
 from langgraph.graph import StateGraph, START, END
 from app.graph.state import AgentState
-from app.graph.nodes import (
-    query_understanding_node,
-    retrieval_node,
-    tool_execution_node,
-    llm_synthesis_node,
-    fallback_node
-)
+from app.graph.nodes.query_understanding import query_understanding_node
+from app.graph.nodes.retrieval import retrieval_node
+from app.graph.nodes.tool_execution import tool_execution_node
+from app.graph.nodes.synthesis import llm_synthesis_node
+from app.graph.nodes.fallback import fallback_node
+from app.graph.edges import should_execute_tool, should_synthesize
 from app.utils.logger import get_logger
 
 logger = get_logger()
-
-def should_execute_tool(state: AgentState):
-    """Quyết định có chạy Tool Node hay rẽ nhánh Fallback"""
-    retrieved = state.get("retrieved_services", [])
-    if len(retrieved) > 0:
-        return "tool_execution"
-    return "fallback"
-
-def should_synthesize(state: AgentState):
-    """Quyết định có chạy Synthesis hay Fallback sau Tool Node"""
-    results = state.get("tool_results", [])
-    if len(results) > 0:
-        return "llm_synthesis"
-    return "fallback"
 
 def build_graph():
     logger.info("Building LangGraph...")
