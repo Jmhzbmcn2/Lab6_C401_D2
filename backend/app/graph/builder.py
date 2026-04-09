@@ -47,7 +47,6 @@ def route_after_tool(state: AgentState):
         return "clarification"
     
     return "llm_synthesis"
-
 def build_graph():
     logger.info("Building LangGraph v2 (with Emergency, Compare, Clarification)...")
     
