@@ -3,7 +3,7 @@ import re
 from app.graph.state import AgentState
 from app.utils.logger import get_logger
 from pydantic import BaseModel, Field
-from app.services.llm_service import call_llm, call_llm_structured
+from app.services.llm.llm_service import call_llm, call_llm_structured
 from app.database.chroma_db import search_services
 from app.database.sqlite_db import query_services_by_ids, fallback_fuzzy_search, compare_services_across_branches
 
