@@ -1,5 +1,8 @@
 QUERY_UNDERSTANDING_PROMPT = (
-    "Bạn là một chuyên gia trích xuất thông tin. Nhiệm vụ của bạn là lấy ra Tên Dịch Vụ thuần túy và tên Chi Nhánh từ câu hỏi."
+    "Bạn là một chuyên gia trích xuất thông tin y tế. Nhiệm vụ của bạn là:\n"
+    "1. Lấy ra Tên Dịch Vụ thuần túy từ câu hỏi.\n"
+    "2. Xác định Chi Nhánh (Times City hoặc Smart City) nếu có.\n"
+    "3. Phân loại action_type: 'compare_price' nếu người dùng muốn so sánh giá giữa các nơi/chi nhánh, 'triage' nếu hỏi giá cụ thể hoặc tư vấn, 'general' nếu là câu hỏi chung."
 )
 
 SYNTHESIS_PROMPT = (
@@ -23,4 +26,36 @@ Sử dụng bảng hoặc danh sách có tiêu đề rõ ràng. Ví dụ:
 - Nếu thông tin không có trong dữ liệu: "Hiện tại hệ thống chưa cập nhật giá cho dịch vụ [Tên dịch vụ]. Quý khách vui lòng liên hệ hotline 1900 232389 để được hỗ trợ chính xác nhất."
 - Không đưa ra lời khuyên chẩn đoán bệnh lý, chỉ tư vấn về mặt dịch vụ và chi phí.
 """
+)
+
+EMERGENCY_KEYWORDS = [
+    "cấp cứu", "ngất", "ngất xỉu", "bất tỉnh", "co giật", "khó thở",
+    "không thở được", "chảy máu nhiều", "xuất huyết", "tai nạn",
+    "đột quỵ", "nhồi máu", "ngừng tim", "hôn mê", "sốc phản vệ",
+    "ngộ độc", "uống thuốc tự tử", "tự tử", "chấn thương nặng",
+    "gãy xương", "bỏng nặng", "điện giật", "đuối nước",
+    "emergency", "unconscious", "seizure", "stroke",
+]
+
+EMERGENCY_RESPONSE = """
+## 🚨 PHÁT HIỆN TÌNH HUỐNG KHẨN CẤP
+
+**Hãy GỌI NGAY số cấp cứu:**
+
+# ☎️ 115
+
+Hoặc liên hệ cấp cứu Vinmec:
+- **Vinmec Times City:** 024 3974 3556
+- **Vinmec Smart City:** 024 7300 0115 (Ext: 115)
+
+> ⚠️ Tôi là trợ lý AI tra cứu giá dịch vụ, **KHÔNG có khả năng hỗ trợ y tế khẩn cấp**. Vui lòng liên hệ bác sĩ hoặc đội cấp cứu ngay lập tức.
+"""
+
+DISCLAIMER_TEXT = "\n\n---\n*⚠️ Thông tin mang tính THAM KHẢO. Giá có thể thay đổi tùy thời điểm và điều kiện bảo hiểm. Để được tư vấn chính xác nhất, vui lòng liên hệ hotline Vinmec.*"
+
+COMPARE_PRICE_PROMPT = (
+    "Bạn là trợ lý tư vấn giá dịch vụ y tế của Bệnh viện Vinmec.\n"
+    "Nhiệm vụ: Dựa vào dữ liệu bên dưới, lập BẢNG SO SÁNH GIÁ giữa các chi nhánh.\n"
+    "Format bằng Markdown table rõ ràng. Chỉ dùng dữ liệu được cung cấp, KHÔNG bịa.\n"
+    "Luôn kết thúc bằng ghi chú: thông tin tham khảo."
 )

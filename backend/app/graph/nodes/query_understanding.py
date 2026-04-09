@@ -15,28 +15,31 @@ def query_understanding_node(state: AgentState) -> dict:
     debug_trace = state.get("debug_trace", [])
     
     try:
-        raw_json = call_llm_structured(
-            prompt=user_query, 
-            schema_class=IntentSchema, 
-            system_prompt=QUERY_UNDERSTANDING_PROMPT
-        )
+        raw_json = call_llm_structured(prompt=user_query, schema_class=IntentSchema, system_prompt=QUERY_UNDERSTANDING_PROMPT)
         
         parsed = json.loads(raw_json)
         normalized_query = parsed.get("normalized_query", user_query)
         intent = parsed.get("intent_branch", "")
+        action_type = parsed.get("action_type", "triage")
             
-        logger.debug(f"Normalized Query: {normalized_query} | Intent: {intent}")
+        logger.debug(f"Normalized Query: {normalized_query} | Intent: {intent} | Action: {action_type}")
         
     except Exception as e:
         logger.error(f"Query understanding failed: {e}")
         normalized_query = user_query
         intent = ""
+        action_type = "triage"
 
     step_trace = {
         "step": "query_understanding",
         "input": {"user_query": user_query},
-        "output": {"normalized_query": normalized_query, "intent": intent}
+        "output": {"normalized_query": normalized_query, "intent": intent, "action_type": action_type}
     }
     
     logger.info("=== Query Understanding Node END ===")
-    return {"normalized_query": normalized_query, "intent": intent, "debug_trace": debug_trace + [step_trace]}
+    return {
+        "normalized_query": normalized_query,
+        "intent": intent,
+        "action_type": action_type,
+        "debug_trace": debug_trace + [step_trace]
+    }
