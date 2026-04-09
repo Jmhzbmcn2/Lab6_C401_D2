@@ -7,6 +7,8 @@ from app.utils.logger import get_logger
 logger = get_logger()
 router = APIRouter()
 
+GENERIC_API_ERROR_MESSAGE = "Xin lỗi, hệ thống đang bận hoặc gặp lỗi tạm thời. Vui lòng thử lại sau ít phút."
+
 @router.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
     logger.info(f"--- API Request START: POST /chat ---")
@@ -43,13 +45,13 @@ async def chat_endpoint(request: ChatRequest):
             debug_trace=debug_trace
         )
         
-    except Exception as e:
-        logger.error(f"API Request FAILED: {e}")
+    except Exception:
+        logger.exception("API Request FAILED with unexpected exception")
         exec_time = time.time() - start_time
         logger.info(f"API Request FAILED in {exec_time:.2f}s")
         
         return ChatResponse(
-            answer=f"Đã xảy ra lỗi nội bộ hệ thống: {e}",
+            answer=GENERIC_API_ERROR_MESSAGE,
             sources=[],
-            debug_trace=[{"error": str(e)}]
+            debug_trace=[{"step": "system_error", "output": {"message": GENERIC_API_ERROR_MESSAGE}}]
         )
