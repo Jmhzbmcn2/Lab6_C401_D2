@@ -5,6 +5,10 @@ from app.utils.logger import get_logger
 
 logger = get_logger()
 
+GENERIC_SYSTEM_ERROR_MESSAGE = (
+    "Xin lỗi, hệ thống đang gặp sự cố tạm thời. Vui lòng thử lại sau ít phút."
+)
+
 client = None
 if GEMINI_API_KEY:
     try:
@@ -16,7 +20,7 @@ def call_llm(prompt: str, system_prompt: str = "") -> str:
     """Gọi Google Gemini API (gemini-2.5-flash-lite)."""
     if not client:
         logger.error("GEMINI_API_KEY is not set or client init failed!")
-        return "[Lỗi hệ thống]: Không tìm thấy GEMINI_API_KEY."
+        return GENERIC_SYSTEM_ERROR_MESSAGE
         
     try:
         response = client.models.generate_content(
@@ -30,7 +34,7 @@ def call_llm(prompt: str, system_prompt: str = "") -> str:
         return response.text
     except Exception as e:
         logger.error(f"Gemini API error: {e}")
-        return f"[Lỗi kết nối Gemini]: {e}"
+        return GENERIC_SYSTEM_ERROR_MESSAGE
 
 def call_llm_structured(prompt: str, schema_class, system_prompt: str = "") -> str:
     """Gọi Google Gemini API và bắt buộc trả về chuỗi JSON theo schema Pydantic."""
