@@ -1,6 +1,5 @@
-from google import genai
-from google.genai import types
-from app.core.config import GEMINI_API_KEY
+from openai import OpenAI
+from app.core.config import OPENAI_API_KEY, OPENAI_MODEL
 from app.utils.logger import get_logger
 
 logger = get_logger()
@@ -10,50 +9,63 @@ GENERIC_SYSTEM_ERROR_MESSAGE = (
 )
 
 client = None
-if GEMINI_API_KEY:
-    try:
-        client = genai.Client(api_key=GEMINI_API_KEY)
-    except Exception as e:
-        logger.error(f"Failed to intialize genai client: {e}")
+if OPENAI_API_KEY:
+    client = OpenAI(api_key=OPENAI_API_KEY)
+else:
+    logger.error("OPENAI_API_KEY is not set.")
 
 def call_llm(prompt: str, system_prompt: str = "") -> str:
-    """Gọi Google Gemini API (gemini-2.5-flash-lite)."""
+    """Gọi OpenAI ChatCompletion API."""
     if not client:
-        logger.error("GEMINI_API_KEY is not set or client init failed!")
+        logger.error("OPENAI_API_KEY is not set or client init failed!")
         return GENERIC_SYSTEM_ERROR_MESSAGE
-        
+
     try:
-        response = client.models.generate_content(
-            model='gemini-2.5-flash-lite',
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=system_prompt,
-                temperature=0.1,
-            ),
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+
+        response = client.chat.completions.create(
+            model=OPENAI_MODEL,
+            messages=messages,
+            temperature=0.1,
         )
-        return response.text
+        return response.choices[0].message.content
     except Exception as e:
-        logger.error(f"Gemini API error: {e}")
+        logger.error(f"OpenAI API error: {e}")
         return GENERIC_SYSTEM_ERROR_MESSAGE
 
 def call_llm_structured(prompt: str, schema_class, system_prompt: str = "") -> str:
-    """Gọi Google Gemini API và bắt buộc trả về chuỗi JSON theo schema Pydantic."""
+    """Gọi OpenAI ChatCompletion API và yêu cầu trả về JSON theo schema Pydantic."""
     if not client:
-        logger.error("GEMINI_API_KEY is not set or client init failed!")
+        logger.error("OPENAI_API_KEY is not set or client init failed!")
         return "{}"
-        
+
     try:
-        response = client.models.generate_content(
-            model='gemini-2.5-flash-lite',
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=system_prompt,
-                temperature=0.1,
-                response_mime_type="application/json",
-                response_schema=schema_class
-            ),
+        schema_text = schema_class.model_json_schema()
+        schema_text = str(schema_text)
+    except Exception:
+        schema_text = str(getattr(schema_class, '__name__', schema_class))
+
+    structured_prompt = (
+        f"{prompt}\n\n"
+        "Vui lòng chỉ trả về JSON hợp lệ khớp với schema sau, không thêm chú thích nào khác:\n"
+        f"{schema_text}"
+    )
+
+    try:
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": structured_prompt})
+
+        response = client.chat.completions.create(
+            model=OPENAI_MODEL,
+            messages=messages,
+            temperature=0.1,
         )
-        return response.text
+        return response.choices[0].message.content
     except Exception as e:
-        logger.error(f"Gemini Structured API error: {e}")
+        logger.error(f"OpenAI Structured API error: {e}")
         return "{}"
