@@ -1,7 +1,6 @@
 # Vinmec Healthcare Assistant (LangGraph RAG System)
 
-Hệ thống tư vấn giá dịch vụ y tế tự động (RAG) được xây dựng dành cho bệnh viện Vinmec, sử dụng kiến trúc hoàn toàn dựa trên sự phát triển theo mô hình LangGraph phân tách thay vì dùng LangChain ReAct Agents ẩn.
-Dự án được chia làm Frontend độc lập và Backend API.
+
 
 ## Cấu Trúc Thư Mục Mới (Clean Architecture)
 
