@@ -1,0 +1,21 @@
+[2026-04-09 10:15:22] [INFO] === Retrieval Node START ===
+[2026-04-09 10:15:22] [DEBUG] Query: nhổ răng khôn mọc lệch | Intent: Smart City
+[2026-04-09 10:15:22] [DEBUG] Retrieved 5 services for 'nhổ răng khôn mọc lệch'
+[2026-04-09 10:15:23] [INFO] === Retrieval Node END ===
+
+[2026-04-09 10:15:23] [INFO] === Tool Execution Node START ===
+[2026-04-09 10:15:23] [DEBUG] Computing Confidence Score... 
+[2026-04-09 10:15:23] [DEBUG] - Top Distances: [0.65, 0.72, 0.81, 0.88, 0.95]
+[2026-04-09 10:15:23] [DEBUG] - Vector Similarity: 0.198 (Low match)
+[2026-04-09 10:15:23] [DEBUG] - Symptom Match Score: 0.0 (No distances < 0.4)
+[2026-04-09 10:15:23] [DEBUG] Confidence Score Calculated: 0.299
+[2026-04-09 10:15:23] [WARNING] Chroma Valid results threshold (<0.6): 0 valid items
+[2026-04-09 10:15:23] [WARNING] No valid results from ChromaDB. Engaging SQLite Fuzzy Fallback.
+[2026-04-09 10:15:23] [DEBUG] Executing SQL: SELECT * FROM services WHERE service_name_vn LIKE '%nhổ%' AND service_name_vn LIKE '%răng%' AND service_name_vn LIKE '%khôn%' AND branch = 'Smart City' 
+[2026-04-09 10:15:23] [DEBUG] Fuzzy fallback returned 2 exact tool matches
+[2026-04-09 10:15:23] [INFO] === Tool Execution Node END ===
+
+[2026-04-09 10:15:23] [INFO] === LLM Synthesis Node START ===
+[2026-04-09 10:15:23] [DEBUG] Calling LLM with 2 context items. Confidence: 0.299
+[2026-04-09 10:15:27] [INFO] LLM Output Generated: "⚠️ LƯU Ý: Độ chính xác tìm kiếm cho truy vấn này hơi thấp. Kết quả dưới đây có thể chưa hoàn toàn phù hợp. Trả về kết quả dự phòng: Dịch vụ Nhổ răng số 8 (Times City/Smart City)..."
+[2026-04-09 10:15:27] [INFO] === LLM Synthesis Node END ===
