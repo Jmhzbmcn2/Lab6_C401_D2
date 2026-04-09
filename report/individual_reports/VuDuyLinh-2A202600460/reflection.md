@@ -1,7 +1,9 @@
 # Individual reflection — Vũ Duy Linh (2A202600460)
-
-## 1. Role
-Vector Specialist. Phụ trách thiết lập mô hình Vector Embedding (`keepitreal/vietnamese-sbert`), index toàn bộ Data vào ChromaDB, xây nghiệp vụ kết nối Retrieval Node và module tìm kiếm của kiến trúc RAG. File đảm nhận: `data_pipeline/vector_indexer.py`, `backend/app/services/retrieval_service.py`.
+## 1. Team
+Họ và tên: Vũ Duy Linh
+Mã số sinh viên: 2A202600460
+Nhóm: Vũ Duy Linh, Đậu Văn Quyền, Hoàng Ngọc Anh, Nguyễn Hoàng Việt, Nguyễn Anh Đức
+Vai trò trong nhóm: Vector Specialist. Phụ trách thiết lập mô hình Vector Embedding (`keepitreal/vietnamese-sbert`), index toàn bộ Data vào ChromaDB, xây nghiệp vụ kết nối Retrieval Node và module tìm kiếm của kiến trúc RAG. File đảm nhận: `data_pipeline/vector_indexer.py`, `backend/app/services/retrieval_service.py`.
 
 ## 2. Đóng góp cụ thể
 - Cấu hình và thiết lập mô hình Vector Embedding `keepitreal/vietnamese-sbert` tối ưu cho xử lý tiếng Việt y khoa.
@@ -23,5 +25,5 @@ Trước hackathon, tôi cho rằng hệ thống RAG chỉ bao gồm việc simi
 Nếu có thêm thời gian, tôi sẽ triển khai Hybrid Search thực sự (kết hợp BM25 Keyword Search cùng với Vector Search) để bắt những từ khoá chuyên ngành viết tắt, vì Vector Embeddings hiện tại vẫn thỉnh thoảng bỏ sát các Keyword cứng (Exact Match) quan trọng. Đồng thời dành thời gian tinh chỉnh Chunking rules và overlap tốt hơn.
 
 ## 7. AI giúp gì / AI sai gì
-- **Giúp:** AI (Copilot/Gemini) giúp viết các snippet boilerplate thao tác với cơ sở dữ liệu vector ChromaDB và FastAPI nhanh chóng; đóng vai trò lớn vào việc debug các dimension mismatch của model SBERT.
-- **Sai/mislead:** Đôi lúc AI gợi ý việc "sinh" (generate) luôn câu trả lời chứa giá tiền từ Vector Context - điều này đi ngược lại hoàn toàn với chiến lược Architecture (Deterministic Backend) của team, có thể dẫn đến Price Hallucination nguy hiểm. Phải cẩn trọng bám sát thiết kế, không tự ý copy-paste logic sinh chữ của AI vào.
+- **Giúp:** AI giúp viết các snippet boilerplate thao tác với cơ sở dữ liệu vector ChromaDB và FastAPI nhanh chóng; đóng vai trò lớn vào việc debug các dimension mismatch của model SBERT.
+- **Sai/mislead:** Đôi lúc AI gợi ý việc "sinh" luôn câu trả lời chứa giá tiền từ Vector Context - điều này đi ngược lại hoàn toàn với chiến lược Architecture của team, có thể dẫn đến Hallucination nguy hiểm. Phải cẩn trọng bám sát thiết kế, không tự ý copy-paste logic sinh chữ của AI vào.
