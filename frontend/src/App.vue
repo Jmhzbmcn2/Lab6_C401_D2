@@ -19,6 +19,7 @@ import Chat from './components/Chat.vue'
 <style>
 /* Global Resets & Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&subset=vietnamese&display=swap');
 
 :root {
   --primary: #004F9E;
@@ -40,7 +41,7 @@ import Chat from './components/Chat.vue'
 }
 
 body {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-main);
   height: 100vh;

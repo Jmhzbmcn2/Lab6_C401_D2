@@ -9,9 +9,17 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
 CHROMA_PATH = os.path.join(BASE_DIR, "database", "chroma_db")
 
 client = chromadb.PersistentClient(path=CHROMA_PATH)
-emb_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
-    model_name="paraphrase-multilingual-MiniLM-L12-v2"
-)
+emb_fn = None
+
+try:
+    logger.info("Initializing SentenceTransformerEmbeddingFunction...")
+    emb_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
+        model_name="paraphrase-multilingual-MiniLM-L12-v2"
+    )
+    logger.info("Embedding function initialized successfully.")
+except Exception as e:
+    logger.error(f"Failed to initialize embedding function (HuggingFace connection error?): {e}")
+    logger.warning("System will continue without local embeddings. RAG features might be limited.")
 
 try:
     collection = client.get_collection(name="medical_services", embedding_function=emb_fn)
