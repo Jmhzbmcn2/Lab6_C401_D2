@@ -72,3 +72,34 @@ def fallback_fuzzy_search(normalized_query: str, branch_filter: str = None) -> l
             "price": row[4]
         })
     return results
+
+
+def compare_services_across_branches(normalized_query: str) -> list:
+    """So sánh giá dịch vụ giữa tất cả các chi nhánh (Times City vs Smart City)."""
+    if not normalized_query:
+        return []
+        
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    
+    keywords = normalized_query.split()
+    query = "SELECT id, branch, service_name_vn, service_group, price FROM services WHERE "
+    conditions = ["service_name_vn LIKE ?"] * len(keywords)
+    query += " AND ".join(conditions)
+    query += " ORDER BY service_name_vn, branch"
+    
+    params = [f"%{k}%" for k in keywords]
+    cursor.execute(query, tuple(params))
+    rows = cursor.fetchall()[:20]  # LIMIT 20 to cover both branches
+    conn.close()
+    
+    results = []
+    for row in rows:
+        results.append({
+            "id": row[0],
+            "branch": row[1],
+            "service_name_vn": row[2],
+            "service_group": row[3],
+            "price": row[4]
+        })
+    return results

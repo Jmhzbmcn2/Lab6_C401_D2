@@ -21,15 +21,15 @@ import Chat from './components/Chat.vue'
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #2C64E3;
-  --primary-hover: #1f4cb3;
-  --secondary: #00D2FF;
-  --bg-color: #0d1117;
-  --panel-bg: #161b22;
-  --text-main: #c9d1d9;
-  --text-muted: #8b949e;
-  --border: #30363d;
-  --accent: #238636;
+  --primary: #004F9E;
+  --primary-hover: #0062c3;
+  --secondary: #00A3E0;
+  --bg-color: #f4f7f6;
+  --panel-bg: #ffffff;
+  --text-main: #2d3748;
+  --text-muted: #718096;
+  --border: #e2e8f0;
+  --accent: #E31837;
   --radius: 12px;
 }
 
@@ -54,9 +54,10 @@ body {
 }
 
 .app-header {
-  background: rgba(22, 27, 34, 0.8);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
@@ -66,22 +67,20 @@ body {
 
 .logo-area h1 {
   font-size: 1.5rem;
-  font-weight: 600;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  color: var(--primary);
   display: inline-block;
   margin-right: 1rem;
 }
 
 .badge {
-  background: rgba(35, 134, 54, 0.2);
-  color: #3fb950;
+  background: rgba(0, 163, 224, 0.1);
+  color: var(--secondary);
   padding: 0.2rem 0.6rem;
   border-radius: 20px;
   font-size: 0.75rem;
-  font-weight: 500;
-  border: 1px solid rgba(63, 185, 80, 0.4);
+  font-weight: 600;
+  border: 1px solid rgba(0, 163, 224, 0.3);
 }
 
 .main-content {
